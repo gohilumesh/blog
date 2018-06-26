@@ -29,17 +29,28 @@ class Posts extends Component {
   }
 
   renderPost = (post) => (
-    <Link to={`/post/${post.id}`} className="card" key={post.id}>
-      <div className="content">
-        <div className="header">{post.title}</div>
+    <div className="item" key={post.id}>
+      <div className="image">
+        <img alt="placeholder for post" src="http://via.placeholder.com/175x145" />
       </div>
-      <div className="content">
-          <div className="description"><i className="icon info circle"></i>{post.description}</div>
-      </div>
-      <div className="extra content">
-          <i className="icon comment"></i> {post.comments.length} comments
-      </div>
-    </Link>
+        <div className="content">
+          <Link to={`/post/${post.id}`} className="header">
+            {post.title}
+          </Link>
+          <div className="meta">
+            <span>Description</span>
+          </div>
+          <div className="description block-with-text">
+            {post.description}
+          </div>
+          <Link to={`/post/${post.id}`} className="card" >
+            Read More
+          </Link>
+          <div className="extra">
+            {`${post.comments.length} comments`}
+          </div>
+        </div>
+    </div>
   )
 
 
@@ -56,13 +67,7 @@ class Posts extends Component {
             Sync with Server
           </button>
         </div>
-        <div className="ui link cards">
-          <div className="card blue">
-            <Link to="/createPost" className="new-post content center aligned">
-              <i className="icon add massive"></i>
-              <p>Create new post</p>
-            </Link>
-          </div>
+        <div className="ui unstackable items">
           {[].concat(posts).sort((a, b) => a.createdAt.localeCompare(b.createdAt)).map(this.renderPost)}
         </div>
       </div>

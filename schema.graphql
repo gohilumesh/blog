@@ -1,4 +1,4 @@
-﻿type Comment {
+type Comment {
   commentId: ID!
   content: String!
   createdAt: String!
@@ -11,6 +11,7 @@ type CommentConnection {
 }
 
 type Mutation {
+  commentOnPost(input: CreateCommentInput!): Comment
   createComment(input: CreateCommentInput!): Comment
   createPost(input: CreatePostInput!): Post
   deleteComment(input: DeleteCommentInput!): Comment
@@ -44,6 +45,8 @@ type Subscription {
     @aws_subscribe(mutations:["createComment"])
   onCreatePost(createdAt: String, description: String, id: ID, title: String): Post
     @aws_subscribe(mutations:["createPost"])
+  subscribeToPostComments(postId: ID): Comment
+    @aws_subscribe(mutations:["commentOnPost"])
 }
 
 input CreateCommentInput {

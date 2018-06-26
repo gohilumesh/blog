@@ -74,6 +74,7 @@ export default graphql(mutationCreatePost, {
         createPost: { ...post,  __typename: 'Post'}
       },
       update: (proxy, { data: { createPost } }) => {
+        createPost.comments = [];
         const data = proxy.readQuery({ query: ListPosts });
         data.listPosts.items.push(createPost);
         proxy.writeQuery({ query: ListPosts, data });
