@@ -1,0 +1,81 @@
+﻿type Comment {
+  commentId: ID!
+  content: String!
+  createdAt: String!
+  postId: ID!
+}
+
+type CommentConnection {
+  items: [Comment]
+  nextToken: String
+}
+
+type Mutation {
+  createComment(input: CreateCommentInput!): Comment
+  createPost(input: CreatePostInput!): Post
+  deleteComment(input: DeleteCommentInput!): Comment
+  deletePost(input: DeletePostInput!): Post
+  updateComment(input: UpdateCommentInput!): Comment
+  updatePost(input: UpdatePostInput!): Post
+}
+
+type Post {
+  comments: [Comment]
+  createdAt: String!
+  description: String!
+  id: ID!
+  title: String!
+}
+
+type PostConnection {
+  items: [Post]
+  nextToken: String
+}
+
+type Query {
+  getComment(postId: ID!): Comment
+  getPost(id: ID!): Post
+  listComments(after: String, first: Int): CommentConnection
+  listPosts(after: String, first: Int): PostConnection
+}
+
+type Subscription {
+  onCreateComment(commentId: ID, content: String, createdAt: String, postId: ID): Comment
+    @aws_subscribe(mutations:["createComment"])
+  onCreatePost(createdAt: String, description: String, id: ID, title: String): Post
+    @aws_subscribe(mutations:["createPost"])
+}
+
+input CreateCommentInput {
+  content: String!
+  createdAt: String!
+  postId: ID!
+}
+
+input CreatePostInput {
+  createdAt: String!
+  description: String!
+  title: String!
+}
+
+input DeleteCommentInput {
+  postId: ID!
+}
+
+input DeletePostInput {
+  id: ID!
+}
+
+input UpdateCommentInput {
+  commentId: ID!
+  content: String
+  createdAt: String
+  postId: ID!
+}
+
+input UpdatePostInput {
+  createdAt: String
+  description: String
+  id: ID!
+  title: String
+}
