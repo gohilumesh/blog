@@ -34,20 +34,22 @@ class Posts extends Component {
         <img alt="placeholder for post" src="http://via.placeholder.com/175x145" />
       </div>
         <div className="content">
-          <Link to={`/post/${post.id}`} className="header">
+          <Link to={`/update/post/${post.id}`} className="header">
             {post.title}
           </Link>
           <div className="meta">
             <span>Description</span>
           </div>
           <div className="description block-with-text">
-            {post.description}
+            <p>{post.description}</p>
           </div>
-          <Link to={`/post/${post.id}`} className="card" >
-            Read More
-          </Link>
-          <div className="extra">
-            {`${post.comments.length} comments`}
+          <div className="extra post-footer">
+            <span>{`${post.comments.length} comments`}</span>
+            <span>
+              <Link to={`/view/post/${post.id}`} className="card" >
+                Read More
+                </Link>
+            </span>
           </div>
         </div>
     </div>
@@ -67,7 +69,7 @@ class Posts extends Component {
             Sync with Server
           </button>
         </div>
-        <div className="ui unstackable items">
+        <div className="all-posts ui unstackable items">
           {[].concat(posts).sort((a, b) => a.createdAt.localeCompare(b.createdAt)).map(this.renderPost)}
         </div>
       </div>

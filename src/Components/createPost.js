@@ -81,4 +81,4 @@ export default graphql(mutationCreatePost, {
       }
     })
   })
-})(CreatePost)
+})(CreatePost);

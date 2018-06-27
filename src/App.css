@@ -32,3 +32,16 @@
 .app-contaianer {
   margin-bottom: 80px;
 }
+
+.all-posts.ui.items>.item .extra.post-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.all-posts.ui.items>.item:nth-child(odd) {
+  background: #e0e0e0;
+}
+
+.all-posts.ui.items>.item>.image+.content {
+  padding: 1em 1em 0.5em 1.5em;
+}

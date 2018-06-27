@@ -12,6 +12,7 @@ import Nav from './nav';
 import Posts from './Components/posts';
 import CreatePost from './Components/createPost';
 import ViewPost from './Components/viewPost';
+import UpdatePost from './Components/updatePost';
 
 const Home = () => (
   <div className="ui container">
@@ -26,7 +27,8 @@ const App = () => (
         <Nav />
         <Switch>
           <Route exact={true} path="/" component={Home} />
-          <Route path="/post/:id" component={ViewPost} />
+          <Route path="/view/post/:id" component={ViewPost} />
+          <Route path="/update/post/:id" component={UpdatePost} />
           <Route path="/createPost" component={CreatePost} />
         </Switch>
       </div>

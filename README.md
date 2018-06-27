@@ -24,6 +24,7 @@ npm run start
 ```
 
 ### Todo
+0. Unit Test each component
 1. Move rendering on Server for accessibility
 2. Update Post functionality needs to be implemented
 3. Delete Post functionality needs to be implemented
