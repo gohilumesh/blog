@@ -11,7 +11,7 @@ class UpdatePost extends React.Component {
   constructor(props) {
     super(props);
     const { post } = this.props;
-    this.state = {};
+    this.state = { post: null };
     if (post) {
       const { post: {id, title, description, createdAt, comments } } = this.props;
       this.state = {
@@ -27,13 +27,16 @@ class UpdatePost extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (this.props.post && nextProps.post && nextProps.post.id !== this.props.post.id) {
-      const { post: {id, title, description, createdAt, comments } } = nextProps;
-      this.setState({
-        post: {
-          id, title, description, createdAt, comments
-        }
-      });
+    let { post } = this.state;
+    if (nextProps.post != null) {
+      if (post === null || nextProps.post.id !== post.id) {
+        const { post: {id, title, description, createdAt, comments } } = nextProps;
+        this.setState({
+          post: {
+            id, title, description, createdAt, comments
+          }
+        });
+      }
     }
   }
 

@@ -6,6 +6,7 @@ import uuidV4 from 'uuid/v4'
 import { graphql } from "react-apollo";
 import ListPosts from "../queries/listPosts";
 import mutationCreatePost from "../mutations/createPost";
+import GetPost from "../queries/getPost";
 
 class CreatePost extends React.Component {
 
@@ -81,6 +82,12 @@ export default graphql(mutationCreatePost, {
         const data = proxy.readQuery({ query: ListPosts });
         data.listPosts.items.push(createPost);
         proxy.writeQuery({ query: ListPosts, data });
+
+        // Create cache entry for GetPost
+        const query2 = GetPost;
+        const variables = { id: createPost.id };
+        const data2 = { getPost: { ...createPost } };
+        proxy.writeQuery({ query: query2, variables, data: data2 });
       }
     })
   })

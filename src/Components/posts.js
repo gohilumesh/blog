@@ -82,7 +82,7 @@ export default withApollo(compose(
     ListPosts,
     {
       options: {
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'cache-first'
       },
       props: ({ data: { listPosts = { items: [] } } }) => ({
         posts: listPosts.items
