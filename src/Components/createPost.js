@@ -9,17 +9,20 @@ import mutationCreatePost from "../mutations/createPost";
 
 class CreatePost extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      post: {
+        title: '',
+        description: '',
+        createdAt: null
+      }
+    };
+  }
+
   static defaultProps = {
     onAdd: () => null,
   }
-
-  state = {
-    post: {
-      title: '',
-      description: '',
-      createdAt: null
-    }
-  };
 
   handleChange(field, { target: { value } }) {
     const { post } = this.state;

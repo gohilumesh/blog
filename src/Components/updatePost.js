@@ -8,18 +8,34 @@ import mutationUpdatePost from "../mutations/updatePost";
 
 class UpdatePost extends React.Component {
 
+  constructor(props) {
+    super(props);
+    const { post } = this.props;
+    this.state = {};
+    if (post) {
+      const { post: {id, title, description, createdAt, comments } } = this.props;
+      this.state = {
+        post: {
+          id, title, description, createdAt, comments
+        }
+      };
+    }
+  }
+
   static defaultProps = {
     onUpdate: () => null,
   }
 
-  state = {
-    post: {
-      id: this.props.post.id,
-      title: this.props.post.title,
-      description: this.props.post.description,
-      createdAt: this.props.post.createdAt
+  componentWillReceiveProps(nextProps){
+    if (this.props.post && nextProps.post && nextProps.post.id !== this.props.post.id) {
+      const { post: {id, title, description, createdAt, comments } } = nextProps;
+      this.setState({
+        post: {
+          id, title, description, createdAt, comments
+        }
+      });
     }
-  };
+  }
 
   handleChange(field, { target: { value } }) {
     const { post } = this.state;
@@ -40,6 +56,10 @@ class UpdatePost extends React.Component {
 
   render() {
     const { post } = this.state;
+
+    if (!post) {
+      return (<div>loading...</div>);
+    }
 
     return (
       <div className="ui container raised very padded segment">
@@ -98,24 +118,6 @@ export default withApollo(compose(
           data.listPosts.items = updatePosts;
           proxy.writeQuery({ query: ListPosts, data });
         }
-        // update: (proxy, { data: { commentOnEvent } }) => {
-        //   const query = QueryGetEvent;
-        //   const variables = { id: commentOnEvent.eventId };
-        //   const data = proxy.readQuery({ query, variables });
-        //
-        //   data.getEvent = {
-        //     ...data.getEvent,
-        //     comments: {
-        //         ...data.getEvent.comments,
-        //         items: [
-        //             ...data.getEvent.comments.items.filter(c => c.commentId !== commentOnEvent.commentId),
-        //             commentOnEvent,
-        //         ]
-        //     }
-        //   };
-        //
-        //   proxy.writeQuery({ query, data });
-        // },
       }),
       props: props => ({
         onUpdate: (post) => {
@@ -131,38 +133,3 @@ export default withApollo(compose(
     }
   )
 )(UpdatePost));
-
-//
-// const UpdatePostWithData = graphql(
-//   GetPost,
-//   {
-//     options: ({ postId: id }) => ({
-//       fetchPolicy: 'cache-and-network',
-//       variables: { id }
-//     }),
-//     props: props => ({
-//       post: props.data.getPost,
-//       onUpdate: post => props.mutate({
-//         variables: post,
-//         optimisticResponse: {
-//           __typename: 'Mutation',
-//           updatePost: { ...post,  __typename: 'Post'}
-//         },
-//         update: (proxy, { data: { updatePost } }) => {
-//           let updatedPost = props.data.getPost;
-//           const data = proxy.readQuery({ query: ListPosts });
-//           let updatePosts = data.listPosts.items.map(p => {
-//             if (p.id === updatedPost.id) {
-//               return updatedPost;
-//             }
-//             return p;
-//           });
-//           data.listPosts.items = updatePosts;
-//           proxy.writeQuery({ query: ListPosts, data });
-//         }
-//       })
-//     }),
-//   },
-// )(UpdatePost);
-//
-// export default UpdatePostWithData;

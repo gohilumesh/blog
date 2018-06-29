@@ -8,12 +8,15 @@ export default gql`
     $createdAt: String
   ) {
     updatePost(input: {
-      id: $ID,
+      id: $id,
       title: $title,
       description: $description,
       createdAt: $createdAt
     }) {
       id
+      title
+      description
+      createdAt
     }
   }
 `
