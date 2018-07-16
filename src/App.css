@@ -45,3 +45,11 @@
 .all-posts.ui.items>.item>.image+.content {
   padding: 1em 1em 0.5em 1.5em;
 }
+
+.ui.menu .item>img:not(.ui) {
+  margin-right: 10px;
+}
+
+.ui.comments {
+  flex: 1;
+}
